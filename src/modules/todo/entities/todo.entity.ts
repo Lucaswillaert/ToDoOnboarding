@@ -1,10 +1,18 @@
-import { Column, CreateDateColumn, DeleteDateColumn, Entity, PrimaryGeneratedColumn, UpdateDateColumn } from 'typeorm'
+import {
+  Column,
+  CreateDateColumn,
+  DeleteDateColumn,
+  Entity,
+  Index, JoinColumn, ManyToOne,
+  PrimaryGeneratedColumn, Relation,
+  UpdateDateColumn
+} from 'typeorm'
+import { User } from '../../../app/users/entities/user.entity.js'
 
-// eslint-disable-next-line @typescript-eslint/ban-ts-comment
-// @ts-expect-error
-@Entity
+@Entity()
 export class Todo {
   @PrimaryGeneratedColumn('uuid')
+  @Index()
   uuid: string
 
   @CreateDateColumn({ precision: 3 })
@@ -27,4 +35,8 @@ export class Todo {
 
   @Column({ type: 'boolean', default: false })
   completed: boolean
+
+  @ManyToOne(() => User, user => user.todos)
+  @JoinColumn()
+  user?: Relation<User>
 }
