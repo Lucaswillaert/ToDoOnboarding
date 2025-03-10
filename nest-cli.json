@@ -1,0 +1,67 @@
+{
+  "$schema": "https://json.schemastore.org/nest-cli",
+  "collection": "@nestjs/schematics",
+  "monorepo": true,
+  "root": "src",
+  "entryFile": "entrypoints/api",
+  "compilerOptions": {
+    "assets": [
+      {
+        "include": "**/*.hbs",
+        "outDir": "dist/src"
+      },
+      {
+        "include": "modules/websocket/documentation.md",
+        "outDir": "dist/src"
+      },
+      {
+        "include": "**/*.json",
+        "outDir": "dist/src",
+        "watchAssets": true
+      },
+      {
+        "include": "modules/swagger/resources/oauth2-redirect.html",
+        "outDir": "dist/src"
+      }
+    ],
+    "deleteOutDir": true
+  },
+  "projects": {
+    "api": {
+      "type": "application",
+      "root": "src",
+      "entryFile": "entrypoints/api",
+      "sourceRoot": "src"
+    },
+    "worker": {
+      "type": "application",
+      "root": "src",
+      "entryFile": "entrypoints/worker",
+      "sourceRoot": "src"
+    },
+    "cronjob": {
+      "type": "application",
+      "root": "src",
+      "entryFile": "entrypoints/cronjob",
+      "sourceRoot": "src"
+    },
+    "wss": {
+      "type": "application",
+      "root": "src",
+      "entryFile": "entrypoints/wss",
+      "sourceRoot": "src"
+    },
+    "playground": {
+      "type": "application",
+      "root": "src",
+      "entryFile": "entrypoints/playground",
+      "sourceRoot": "src"
+    },
+    "metrics": {
+      "type": "application",
+      "root": "src",
+      "entryFile": "entrypoints/metrics",
+      "sourceRoot": "src"
+    }
+  }
+}
