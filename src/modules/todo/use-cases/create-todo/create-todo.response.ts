@@ -9,7 +9,7 @@ export class CreateTodoResponse {
   @ApiProperty({ type: String, format: 'date-time' })
   updatedAt: string
 
-  @ApiProperty()
+  @ApiProperty({ type: String })
   title: string
 
   @ApiProperty({ type: String, nullable: true })
@@ -18,7 +18,7 @@ export class CreateTodoResponse {
   @ApiProperty({ type: String, nullable: true, format: 'date-time' })
   deadline: string | null
 
-  @ApiProperty()
+  @ApiProperty({ type: Boolean, nullable: true })
   isCompleted: boolean | null
 
   constructor (todo: Todo) {

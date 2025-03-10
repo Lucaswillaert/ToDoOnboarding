@@ -3,7 +3,7 @@ import { IsNullable } from '@wisemen/validators'
 import { ApiProperty } from '@nestjs/swagger'
 
 export class CreateTodoCommand {
-  @ApiProperty()
+  @ApiProperty({ type: String })
   @IsNotEmpty()
   title: string
 
