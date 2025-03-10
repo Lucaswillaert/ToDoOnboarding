@@ -9,6 +9,7 @@ import {
   OneToMany
 } from 'typeorm'
 import { UserRole } from '../../roles/entities/user-role.entity.js'
+import { Todo } from '../../../modules/todo/entities/todo.entity.js'
 
 @Entity()
 export class User {
@@ -39,4 +40,7 @@ export class User {
 
   @OneToMany(() => UserRole, role => role.user)
   userRoles?: Array<Relation<UserRole>>
+
+  @OneToMany(() => Todo, todo => todo.user)
+  todos?: Array<Relation<Todo>>
 }
