@@ -2,8 +2,7 @@ import {
   Column,
   CreateDateColumn,
   DeleteDateColumn,
-  Entity,
-  Index, JoinColumn, ManyToOne,
+  Entity, JoinColumn, ManyToOne,
   PrimaryGeneratedColumn, Relation,
   UpdateDateColumn
 } from 'typeorm'
@@ -12,17 +11,16 @@ import { User } from '../../../app/users/entities/user.entity.js'
 @Entity()
 export class Todo {
   @PrimaryGeneratedColumn('uuid')
-  @Index()
   uuid: string
 
-  @CreateDateColumn({ precision: 3 })
+  @CreateDateColumn()
   createdAt: Date
 
-  @UpdateDateColumn({ precision: 3 })
+  @UpdateDateColumn()
   updatedAt: Date
 
-  @DeleteDateColumn({ precision: 3 })
-  deletedAt: Date
+  @DeleteDateColumn()
+  deletedAt: Date | null
 
   @Column({ type: 'varchar' })
   title: string
@@ -30,13 +28,16 @@ export class Todo {
   @Column({ type: 'varchar', nullable: true })
   description: string | null
 
-  @Column ({ type: 'timestamp', precision: 3, nullable: true })
+  @Column ({ type: 'timestamptz', nullable: true })
   deadline: Date | null
 
   @Column({ type: 'boolean', default: false })
-  completed: boolean
+  isCompleted: boolean
+
+  @Column({ type: 'uuid' })
+  userUuid: string
 
   @ManyToOne(() => User, user => user.todos)
-  @JoinColumn()
+  @JoinColumn({ name: 'user_uuid' })
   user?: Relation<User>
 }
