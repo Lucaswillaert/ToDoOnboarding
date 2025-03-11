@@ -6,6 +6,8 @@ export class CreateTodoCommandBuilder {
   constructor () {
     this.command = new CreateTodoCommand()
     this.command.title = 'title'
+    this.command.description = null
+    this.command.deadline = null
   }
 
   withTitle (title: string): this {

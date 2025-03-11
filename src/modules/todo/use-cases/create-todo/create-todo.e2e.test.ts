@@ -22,14 +22,14 @@ describe ('Create Todo', () => {
     await setup.teardown()
   })
 
-  it('should return 401 when not authenticated', async () => {
+  it('return 401 when not authenticated', async () => {
     const response = await request(setup.httpServer)
       .post('/todos')
 
     expect(response).toHaveStatus(401)
   })
 
-  it('should return 403 when not authorized', async () => {
+  it('return 403 when not authorized', async () => {
     const response = await request(setup.httpServer)
       .post('/todos')
       .set('Authorization', `Bearer ${defaultUser.token}`)
@@ -37,7 +37,7 @@ describe ('Create Todo', () => {
     expect(response).toHaveStatus(403)
   })
 
-  it('should create a todo', async () => {
+  it('create a todo', async () => {
     const command = new CreateTodoCommandBuilder()
       .withTitle('Test Todo')
       .withDescription('Test Description')
@@ -49,9 +49,12 @@ describe ('Create Todo', () => {
       .send(command)
 
     expect(response).toHaveStatus(201)
+    expect(response.body).toStrictEqual(expect.objectContaining({
+      uuid: expect.uuid()
+    }))
   })
 
-  it('should not create a todo with no title', async () => {
+  it('does not create a todo with no title', async () => {
     const command = new CreateTodoCommandBuilder()
       .withTitle('')
       .withDescription('Test Description')
