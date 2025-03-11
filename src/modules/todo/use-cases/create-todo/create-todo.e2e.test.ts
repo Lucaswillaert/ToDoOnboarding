@@ -1,0 +1,67 @@
+import { after, before, describe, it } from 'node:test'
+import request from 'supertest'
+import { expect } from 'expect'
+import { EndToEndTestSetup } from '../../../../../test/setup/end-to-end-test-setup.js'
+import { TestBench } from '../../../../../test/setup/test-bench.js'
+import { TestAuthContext } from '../../../../../test/utils/test-auth-context.js'
+import type { TestUser } from '../../../../app/users/tests/setup-user.type.js'
+import { CreateTodoCommandBuilder } from './create-todo.command.builder.js'
+
+describe ('Create Todo', () => {
+  let setup: EndToEndTestSetup
+  let context: TestAuthContext
+  let defaultUser: TestUser
+
+  before(async () => {
+    setup = await TestBench.setupEndToEndTest()
+    context = setup.authContext
+    defaultUser = await context.getDefaultUser()
+  })
+
+  after(async () => {
+    await setup.teardown()
+  })
+
+  it('should return 401 when not authenticated', async () => {
+    const response = await request(setup.httpServer)
+      .post('/todos')
+
+    expect(response).toHaveStatus(401)
+  })
+
+  it('should return 403 when not authorized', async () => {
+    const response = await request(setup.httpServer)
+      .post('/todos')
+      .set('Authorization', `Bearer ${defaultUser.token}`)
+
+    expect(response).toHaveStatus(403)
+  })
+
+  it('should create a todo', async () => {
+    const command = new CreateTodoCommandBuilder()
+      .withTitle('Test Todo')
+      .withDescription('Test Description')
+      .build()
+
+    const response = await request(setup.httpServer)
+      .post('/todos')
+      .set('Authorization', `Bearer ${defaultUser.token}`)
+      .send(command)
+
+    expect(response).toHaveStatus(201)
+  })
+
+  it('should not create a todo with no title', async () => {
+    const command = new CreateTodoCommandBuilder()
+      .withTitle('')
+      .withDescription('Test Description')
+      .build()
+
+    const response = await request(setup.httpServer)
+      .post('/todos')
+      .set('Authorization', `Bearer ${defaultUser.token}`)
+      .send(command)
+
+    expect(response).toHaveStatus(400)
+  })
+})
