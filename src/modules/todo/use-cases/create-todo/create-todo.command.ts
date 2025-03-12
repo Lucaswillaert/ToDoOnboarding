@@ -15,5 +15,5 @@ export class CreateTodoCommand {
   @ApiProperty({ type: String, nullable: true, format: 'date-time' })
   @IsDateString({ strict: true })
   @IsNullable()
-  deadline: Date | null
+  deadline: string | null
 }
