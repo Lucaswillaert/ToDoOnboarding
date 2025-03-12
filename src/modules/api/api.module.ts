@@ -11,6 +11,7 @@ import { LocalizationModule } from '../localization/modules/localization.module.
 import { ContactModule } from '../../app/contact/contact.module.js'
 import { PreferencesModule } from '../../app/preferences/preferences.module.js'
 import { AuthMiddleware } from '../auth/middleware/auth.middleware.js'
+import { TodoModule } from '../todo/todo.module.js'
 
 @Module({
   imports: [
@@ -24,7 +25,8 @@ import { AuthMiddleware } from '../auth/middleware/auth.middleware.js'
     FileModule,
     LocalizationModule,
     ContactModule,
-    PreferencesModule
+    PreferencesModule,
+    TodoModule
   ]
 })
 export class ApiModule {
