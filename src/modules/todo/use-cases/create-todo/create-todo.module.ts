@@ -8,7 +8,6 @@ import { CreateTodoUseCase } from './create-todo.use-case.js'
 @Module({
   imports: [TypeOrmModule.forFeature([Todo]), AuthModule],
   controllers: [CreateTodoController],
-  providers: [CreateTodoUseCase],
-  exports: []
+  providers: [CreateTodoUseCase]
 })
 export class CreateTodoModule {}

@@ -14,9 +14,7 @@ export class CreateTodoUseCase {
     private readonly authContext: AuthStorage
   ) {}
 
-  async execute (
-    command: CreateTodoCommand
-  ): Promise <CreateTodoResponse> {
+  async execute (command: CreateTodoCommand): Promise <CreateTodoResponse> {
     const todo = this.todoRepository.create({
       title: command.title,
       description: command.description,
