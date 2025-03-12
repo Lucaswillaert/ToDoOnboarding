@@ -22,7 +22,7 @@ export class CreateTodoCommandBuilder {
     return this
   }
 
-  withDeadline (deadline: Date | null): this {
+  withDeadline (deadline: string | null): this {
     this.command.deadline = deadline
 
     return this
