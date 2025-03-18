@@ -7,6 +7,7 @@ import { GetAllTodosModule } from './use-cases/get-all-todos/get-all-todos.modul
   imports: [
     CreateTodoModule,
     GetAllTodosModule,
+    GetAllTodosModule,
     AuthModule
   ]
 })
