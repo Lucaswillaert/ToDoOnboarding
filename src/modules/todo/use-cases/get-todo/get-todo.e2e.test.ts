@@ -23,14 +23,14 @@ describe('Todos', () => {
 
   it('return 401 when not authenticated', async () => {
     const response = await request(setup.httpServer)
-      .get('todos/')
+      .get('/todos/1')
 
     expect(response).toHaveStatus(401)
   })
 
   it('return 403 when not authorized', async () => {
     const response = await request(setup.httpServer)
-      .get('todos/')
+      .get('/todos/1')
       .set('Authorization', `Bearer ${defaultUser.token}`)
 
     expect(response).toHaveStatus(403)
@@ -43,20 +43,30 @@ describe('Todos', () => {
       .withDeadline(null)
       .build()
 
+    const createResponse = await request(setup.httpServer)
+      .post('/todos')
+      .set('Authorization', `Bearer ${adminUser.token}`)
+      .send(command)
+
+    expect(createResponse).toHaveStatus(201)
+
+    // eslint-disable-next-line @typescript-eslint/no-unsafe-assignment
+    const todoUuid = createResponse.body.uuid
+
     const response = await request(setup.httpServer)
-      .get('todos/1')
+      .get(`/todos/${todoUuid}`)
       .set('Authorization', `Bearer ${adminUser.token}`)
       .send(command)
 
     expect(response).toHaveStatus(200)
     expect(response.body).toEqual(expect.objectContaining({
-      uuid: expect.uuid
+      uuid: todoUuid
     }))
   })
 
   it('return 404 when no todo is found', async () => {
     const response = await request(setup.httpServer)
-      .get('todos/1')
+      .get('/todos/c420d2574a49480a89a615716c359f94')
       .set('Authorization', `Bearer ${adminUser.token}`)
 
     expect(response).toHaveStatus(404)
