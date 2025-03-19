@@ -2,6 +2,7 @@ import { Injectable } from '@nestjs/common'
 import { InjectRepository } from '@wisemen/nestjs-typeorm'
 import { Repository } from 'typeorm'
 import { Todo } from '../../entities/todo.entity.js'
+import { GetTodoResponse } from './get-todo.response.js'
 
 @Injectable()
 export class GetTodoUseCase {
@@ -9,7 +10,9 @@ export class GetTodoUseCase {
     @InjectRepository(Todo) private readonly todoRepository: Repository<Todo>
   ) {}
 
-  async GetTodo (uuid: string): Promise<Todo> {
-    return await this.todoRepository.findOneByOrFail({ uuid })
+  async GetTodo (uuid: string): Promise<GetTodoResponse> {
+    const todo = await this.todoRepository.findOneByOrFail({ uuid })
+
+    return new GetTodoResponse(todo)
   }
 }
