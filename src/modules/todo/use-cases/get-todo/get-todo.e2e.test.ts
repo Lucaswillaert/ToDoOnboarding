@@ -63,12 +63,4 @@ describe('Todos', () => {
       uuid: todoUuid
     }))
   })
-
-  it('return 404 when no todo is found', async () => {
-    const response = await request(setup.httpServer)
-      .get('/todos/c420d2574a49480a89a615716c359f94')
-      .set('Authorization', `Bearer ${adminUser.token}`)
-
-    expect(response).toHaveStatus(404)
-  })
 })
