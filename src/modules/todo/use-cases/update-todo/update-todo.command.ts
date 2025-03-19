@@ -5,12 +5,13 @@ import { IsNullable } from '@wisemen/validators'
 export class UpdateTodoCommand {
   @ApiProperty({ type: String })
   @IsNotEmpty()
+  @IsString()
   title: string
 
-  @ApiProperty({ type: String })
+  @ApiProperty({ type: String, nullable: true })
   @IsNullable()
   @IsString()
-  description: string
+  description: string | null
 
   @ApiProperty({ type: String, nullable: true, format: 'date-time' })
   @IsDateString({ strict: true })

@@ -8,7 +8,6 @@ import { TestBench } from '../../../../../test/setup/test-bench.js'
 import { Todo } from '../../entities/todo.entity.js'
 import { TodoEntityBuilder } from '../../builder/todo.entity.builder.js'
 import { UpdateTodoCommand } from './update-todo.command.js'
-import { UpdateTodoResponse } from './update-todo.response.js'
 
 describe('Update Todo', () => {
   let setup: EndToEndTestSetup
@@ -66,11 +65,6 @@ describe('Update Todo', () => {
       .set('Authorization', `Bearer ${adminUser.token}`)
       .send(updateTodoCommand)
 
-    expect(updateResponse).toHaveStatus(200)
-
-    const updatedTodo = updateResponse.body as UpdateTodoResponse
-
-    expect(updatedTodo.title).toBe('Updated Todo titel')
-    expect(updatedTodo.description).toBe('Updated description')
+    expect(updateResponse).toHaveStatus(204)
   })
 })

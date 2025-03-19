@@ -1,10 +1,10 @@
-import { Body, Controller, Param, Patch } from '@nestjs/common'
-import { ApiOkResponse, ApiTags } from '@nestjs/swagger'
+import { Body, Controller, HttpCode, Patch } from '@nestjs/common'
+import { ApiNoContentResponse, ApiTags } from '@nestjs/swagger'
+import { UuidParam } from '@wisemen/decorators'
 import { Permission } from '../../../permission/permission.enum.js'
 import { Permissions } from '../../../permission/permission.decorator.js'
 import { UpdateTodoUseCase } from './update-todo.use-case.js'
 import { UpdateTodoCommand } from './update-todo.command.js'
-import { UpdateTodoResponse } from './update-todo.response.js'
 
 @ApiTags('Todo')
 @Controller('todos')
@@ -14,11 +14,13 @@ export class UpdateTodoController {
   ) {}
 
   @Patch('/:uuid')
-  @ApiOkResponse({ type: UpdateTodoResponse })
+  @HttpCode(204)
   @Permissions(Permission.TODO_UPDATE)
+  @ApiNoContentResponse()
   async updateTodo (
-    @Param('uuid') uuid: string, @Body() updateTodoCommand: UpdateTodoCommand
-  ): Promise<UpdateTodoResponse> {
-    return await this.updateTodoUseCase.update(uuid, updateTodoCommand)
+    @UuidParam('uuid') uuid: string,
+    @Body() updateTodoCommand: UpdateTodoCommand
+  ): Promise<void> {
+    await this.updateTodoUseCase.update(uuid, updateTodoCommand)
   }
 }
