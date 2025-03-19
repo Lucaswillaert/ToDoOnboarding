@@ -1,11 +1,15 @@
-import { v1 } from 'uuid'
+import { v4 } from 'uuid'
 import { Todo } from '../entities/todo.entity.js'
 
 export class TodoEntityBuilder {
   private readonly todo: Todo = new Todo()
 
   constructor () {
-    this.todo.uuid = v1()
+    this.todo.uuid = v4()
+    this.todo.title = v4()
+    this.todo.description = null
+    this.todo.isCompleted = false
+    this.todo.userUuid = v4()
   }
 
   withUuid (uuid: string): TodoEntityBuilder {
