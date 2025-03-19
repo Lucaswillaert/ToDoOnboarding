@@ -13,9 +13,7 @@ export class DeleteTodoUseCase {
 
   async execute (uuid: string): Promise<void> {
     await transaction(this.dataSource, async () => {
-      await this.todoRepository.delete({
-        uuid: uuid
-      })
+      await this.todoRepository.delete({ uuid: uuid })
     })
   }
 }

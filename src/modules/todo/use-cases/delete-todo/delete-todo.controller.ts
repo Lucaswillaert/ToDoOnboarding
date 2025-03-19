@@ -12,9 +12,9 @@ export class DeleteTodoController {
     private readonly deleteTodoUseCase: DeleteTodoUseCase
   ) {}
 
-  @Delete(':uuid')
+  @Delete('/:todoUuid')
   @Permissions(Permission.TODO_DELETE)
-  deleteTodo (@UuidParam('Todo') uuid: string) {
+  deleteTodo (@UuidParam('todoUuid') uuid: string) {
     return this.deleteTodoUseCase.execute(uuid)
   }
 }
