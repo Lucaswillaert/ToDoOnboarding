@@ -1,5 +1,5 @@
 import { Controller, Delete } from '@nestjs/common'
-import { ApiTags } from '@nestjs/swagger'
+import { ApiOkResponse, ApiTags } from '@nestjs/swagger'
 import { UuidParam } from '@wisemen/decorators'
 import { Permission } from '../../../permission/permission.enum.js'
 import { Permissions } from '../../../permission/permission.decorator.js'
@@ -14,7 +14,8 @@ export class DeleteTodoController {
 
   @Delete('/:todoUuid')
   @Permissions(Permission.TODO_DELETE)
-  deleteTodo (@UuidParam('todoUuid') uuid: string) {
+  @ApiOkResponse({ description: 'Successfully deleted' })
+  deleteTodo (@UuidParam('todoUuid') uuid: string): Promise<void> {
     return this.deleteTodoUseCase.execute(uuid)
   }
 }
