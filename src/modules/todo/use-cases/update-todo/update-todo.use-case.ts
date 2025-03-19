@@ -3,7 +3,6 @@ import { InjectRepository } from '@wisemen/nestjs-typeorm'
 import { Repository } from 'typeorm'
 import { Todo } from '../../entities/todo.entity.js'
 import { UpdateTodoCommand } from './update-todo.command.js'
-import { UpdateTodoResponse } from './update-todo.response.js'
 
 @Injectable()
 export class UpdateTodoUseCase {
@@ -12,11 +11,18 @@ export class UpdateTodoUseCase {
     private readonly todoRepository: Repository<Todo>
   ) {}
 
-  async update (uuid: string, attrs: Partial <UpdateTodoCommand>): Promise<UpdateTodoResponse> {
-    const todo = await this.todoRepository.findOneOrFail({ where: { uuid } })
+  async update (
+    uuid: string,
+    command: Partial <UpdateTodoCommand>
+  ): Promise<void> {
+    await this.todoRepository.findOneOrFail({ where: { uuid } })
 
-    Object.assign(todo, attrs)
-
-    return new UpdateTodoResponse(todo)
+    await this.todoRepository.update({
+      uuid
+    }, {
+      title: command.title,
+      description: command.description,
+      deadline: command.deadline
+    })
   }
 }
