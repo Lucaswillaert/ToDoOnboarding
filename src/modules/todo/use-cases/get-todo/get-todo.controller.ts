@@ -22,6 +22,6 @@ export class GetTodoController {
   async GetTodo (
     @UuidParam('uuid') uuid: string
   ): Promise<GetTodoResponse> {
-    return await this.useCase.GetTodo(uuid)
+    return await this.useCase.getTodo(uuid)
   }
 }

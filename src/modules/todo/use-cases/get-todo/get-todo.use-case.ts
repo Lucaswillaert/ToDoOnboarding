@@ -10,7 +10,7 @@ export class GetTodoUseCase {
     @InjectRepository(Todo) private readonly todoRepository: Repository<Todo>
   ) {}
 
-  async GetTodo (uuid: string): Promise<GetTodoResponse> {
+  async getTodo (uuid: string): Promise<GetTodoResponse> {
     const todo = await this.todoRepository.findOneByOrFail({ uuid })
 
     return new GetTodoResponse(todo)

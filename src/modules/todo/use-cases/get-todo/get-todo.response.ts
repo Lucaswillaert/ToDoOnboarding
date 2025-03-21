@@ -2,7 +2,7 @@ import { ApiProperty } from '@nestjs/swagger'
 import { Todo } from '../../entities/todo.entity.js'
 
 export class GetTodoResponse {
-  @ApiProperty({ type: String })
+  @ApiProperty({ type: String, format: 'uuid' })
   uuid: string
 
   @ApiProperty({ type: String, format: 'date-time' })
