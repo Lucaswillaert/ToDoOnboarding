@@ -19,6 +19,7 @@ export enum Permission {
   TODO_CREATE = 'todo.create',
   TODO_READ = 'todo.read',
   TODO_DELETE = 'todo.delete',
+  TODO_UPDATE = 'todo.update',
 
   TYPESENSE = 'typesense'
 }
